@@ -1,0 +1,7 @@
+#localhost-home: /proj18/php/0Demo/CodeMagic/view/PageSignIn.php
+#localhost-office: 
+#staging-server: http://rawdd.co.nf/proj18/registration/view/indexNew.php
+
+ErrorDocument 403 /proj18/php/0Demo/CodeMagic/view/PageSignIn.php
+ErrorDocument 404 /proj18/php/0Demo/CodeMagic/view/PageSignIn.php
+ErrorDocument 500 /php/0Demo/CodeMagic/view/PageSignIn.php

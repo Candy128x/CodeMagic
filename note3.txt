@@ -1,0 +1,20 @@
+proj: CodeMagic >parent registation & hallBooking
+
+tech: php, mySql
+#180716
+
+desc: features of Signup, Signin, forgot password. using concept of MD5(pwd), SHA256 for token, err404 page redirect.
+
+
+
+#gitH
+
+
+https://github.com/Candy128x/CodeMagic.git
+
+
+
+remtcodmag
+brncodmag
+brncodmago
+
