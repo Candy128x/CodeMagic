@@ -26,6 +26,29 @@ include 'Header.php';
 <p claas="pFocus" href="">get huge disscount.. !</p>
 <p class="pFoDis">50% Disscount</p>
 <p class="pMoDis">80% Disscount</p>
+<br><br>
+
+<code>Hide in 3re sec</code>
+<p class="hide3sec">i m hide in 3re sec</p>
+<br><br>
+
+<button class="fadeOut5sec">fadeOut in 3re sec</button>
+<button class="fadeIn5sec">fadeIn fast</button>
+<p class="fade5sec">i m fade in 5re sec</p>
+<br><br>
+
+<code id="flip">single click to slide down & double click to slide up</code>
+<pre id="flipPre">
+slide down slow
+&
+slide up 1 in sec
+</pre> 
+<br><br>
+
+<code id="anim">flip to right 300px</code>
+<div id="aniBox" style="background:#98bf21;height:100px;width:100px;position:absolute;"></div>
+<br><br>
+
 
 <script type='text/javascript'>
 $(document).ready(function(){
@@ -55,6 +78,28 @@ $("p.pFocus").focus(function(){
 $("p.pFocus").mouseover(function(){
     $("p.pMoDis").hide();
 })
+
+$("p.hide3sec").click(function(){
+	$("p.hide3sec").hide(3000);
+});
+
+$("button.fadeOut5sec").click(function(){
+	$("p.fade5sec").fadeOut(3000);
+});
+$("button.fadeIn5sec").click(function(){
+	$("p.fade5sec").fadeIn("fast");
+});
+
+$("#flip").click(function(){
+	$("#flipPre").slideDown("slow");
+});
+$("#flip").dblclick(function(){
+	$("#flipPre").slideUp(1000);
+});
+
+$("#ani").click(function(){
+	$("#aniBox").animate({left: '300px'});
+});
 </script>
 </body>
 </html>
