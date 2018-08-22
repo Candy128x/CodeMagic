@@ -14,7 +14,7 @@ include('Header.php');
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="content">
 
 <h2>Listing from Database</h2>
 <h5>#PaginateDelWithoutRefrsh</h5>
@@ -194,8 +194,8 @@ if(!empty($result))
 		href='../model/DataUpdate.php?id=<?php echo $row['id'];?>'>
 		<i class='glyphicon glyphicon-retweet'></i></a>
 		
-		<a class='btn btn-danger' data-toggle='tooltip' title='Delete..' 
-		href='' onClick="deleteAjax('<?php echo $row['id']; ?>');">
+		<a class='btn btn-danger delbutton' data-toggle='tooltip' title='Delete..' 
+		href='' id="<?php echo $row['id'];?>">
 		<i class='glyphicon glyphicon-trash'></i></a></td>
 </tr>
 <?php
@@ -214,20 +214,23 @@ echo $per_page_html;
 
 
 <script type="text/javascript">
-function deleteAjax(setId){
-	if (confirm("Are you sure you want to delete this ID data?")) {
-		$.ajax({
-			url: '../model/DataDeletePaginateDelWithoutRefrsh.php',
-			type: 'GET',
-			data:{id:setId},
-			success: function(data){
-				$("#delete"+setId).hide('slow');
-			}
-		});
-	} else {
-		return false;
-	}
-}	
+$(document).ready(function(){
+	$(".delbutton").click(function(){
+		var id = $(this).attr(id);
+		if (confirm("Are you sure you want to delete this ID data?")) {
+			$.ajax({
+				url: '../model/DataDeletePaginateDelWithoutRefrsh.php',
+				type: 'GET',
+				data:{id:id},
+				success: function(data){
+					$("#content").load('../view/formPaginateDelWithoutRefrsh.php');
+				}
+			});
+		} else {
+			return false;
+		}
+	});
+});	
 </script>
 	
 
