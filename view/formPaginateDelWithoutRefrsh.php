@@ -95,7 +95,7 @@ $pdo_statement = $conn->prepare($query);
 $pdo_statement->bindValue(':keyword', '%'.$search_keyword.'%', PDO::PARAM_STR);
 $pdo_statement->execute(); 
 $result = $pdo_statement->fetchAll();
-	var_dump($pdo_statement);
+	//var_dump($pdo_statement);
 	//exit('in search cust_name..');
 ?>
 
