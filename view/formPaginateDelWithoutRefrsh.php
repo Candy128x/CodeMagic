@@ -14,7 +14,7 @@ include('Header.php');
 </style>
 </head>
 <body>
-<div class="container" id="content">
+<div class="container">
 
 <h2>Listing from Database</h2>
 <h5>#PaginateDelWithoutRefrsh</h5>
@@ -22,56 +22,39 @@ include('Header.php');
 <?php
 define("ROW_PER_PAGE",5);
 include_once('../model/config/ConnDB.php');
-
-
 $search_keyword = ''; 
 //$sql = '';
-
 unset($sqlQry);
-
 if(!empty($_GET['search']['keyword']))
 {
 	$search_keyword = $_GET['search']['keyword'];
 	$sqlQry[] = 'cust_name LIKE '.$search_keyword.' OR cust_cont_no LIKE '.$search_keyword.' OR cust_email LIKE '.$search_keyword.' OR sta_date_time LIKE '.$search_keyword.' OR end_date_time LIKE '.$search_keyword.' OR tot_amt LIKE '.$search_keyword.' OR paid_amt LIKE '.$search_keyword.' OR collect_amt LIKE '.$search_keyword;
 }
-
-
 if(!empty($_GET['search']['keyword_id']))
 {
 	$search_keyword = $_GET['search']['keyword_id'];
 	$sqlQry[] = 'id LIKE '.$search_keyword;
 }
-
-
 if(!empty($_GET['search']['keyword_cust_name']))
 {
 	$search_keyword = $_GET['search']['keyword_cust_name'];
 	$sqlQry[] = 'cust_name LIKE '.$search_keyword;
 }
-
-
 if(!empty($_GET['search']['keyword_cust_cont_no']))
 {
 	$search_keyword = $_GET['search']['keyword_cust_cont_no'];
 	$sqlQry[] = 'cust_cont_no LIKE '.$search_keyword;
 }
-
-
 $sql = 'SELECT * FROM HallBooking';
-
 if(!empty($sqlQry))
 {
 	$sql .= ' WHERE ' . implode(' AND ',$sqlQry).' ORDER BY id DESC'; 
 }
-
 if(empty($sqlQry))
 {
 	$sql .= ' ORDER BY id DESC'; 
 }
-
-
 // $sql = 'SELECT * FROM HallBooking WHERE cust_name LIKE :keyword OR cust_cont_no LIKE :keyword OR cust_email LIKE :keyword OR sta_date_time LIKE :keyword OR end_date_time LIKE :keyword OR tot_amt LIKE :keyword OR paid_amt LIKE :keyword OR collect_amt LIKE :keyword ORDER BY id DESC';
-
 //  Pagination
 $per_page_html = '';
 $page = 1;
@@ -85,7 +68,6 @@ $limit = " limit ".$start.",".ROW_PER_PAGE;
 $pagination_statement = $conn->prepare($sql);
 $pagination_statement->bindValue(':keyword', '%'.$search_keyword.'%', PDO::PARAM_STR);
 $pagination_statement->execute();
-
 $row_count = $pagination_statement->rowCount();
 if(!empty($row_count))
 {
@@ -107,16 +89,13 @@ if(!empty($row_count))
 	}
 	$per_page_html .= "</div>";
 }
-
 $query = $sql.$limit;
 $pdo_statement = $conn->prepare($query);
 $pdo_statement->bindValue(':keyword', '%'.$search_keyword.'%', PDO::PARAM_STR);
 $pdo_statement->execute();
 $result = $pdo_statement->fetchAll();
-
 	var_dump($pdo_statement);
 	//exit('in search cust_name..');
-
 ?>
 
 
@@ -194,8 +173,8 @@ if(!empty($result))
 		href='../model/DataUpdate.php?id=<?php echo $row['id'];?>'>
 		<i class='glyphicon glyphicon-retweet'></i></a>
 		
-		<a class='btn btn-danger delbutton' data-toggle='tooltip' title='Delete..' 
-		href='' id="<?php echo $row['id'];?>">
+		<a class='btn btn-danger ajaxDelData' data-toggle='tooltip' title='Delete..' 
+		href='' cid="<?php echo $row['id'];?>">
 		<i class='glyphicon glyphicon-trash'></i></a></td>
 </tr>
 <?php
@@ -215,22 +194,22 @@ echo $per_page_html;
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$(".delbutton").click(function(){
-		var id = $(this).attr(id);
-		if (confirm("Are you sure you want to delete this ID data?")) {
+	$(".ajaxDelData").click(function(){
+		var id = $(this).attr("cid");
+		if (confirm("Are you sure you want to delete this "+id+" ID data?")) {
 			$.ajax({
 				url: '../model/DataDeletePaginateDelWithoutRefrsh.php',
 				type: 'GET',
 				data:{id:id},
+				cahe: false,
 				success: function(data){
-					$("#content").load('../view/formPaginateDelWithoutRefrsh.php');
+					$("#delete"+id).hide('fast');
 				}
 			});
-		} else {
-			return false;
 		}
-	});
-});	
+			return false;
+	});	
+});
 </script>
 	
 
