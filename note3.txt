@@ -1,0 +1,4 @@
+Proj: CodeMagic
+
+remtcodmag https://github.com/Candy128x/CodeMagic
+brncodmago
